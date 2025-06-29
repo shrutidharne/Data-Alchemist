@@ -1,0 +1,2 @@
+WorkerID,WorkerName,Skills,MaxLoadPerPhase,WorkerGroup
+W1,TestWorker,"Skill1,Skill2",3,Group1

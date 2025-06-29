@@ -1,6 +1,5 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { ClientsProvider, useClients } from '../components/ClientsContext';
 import UploadSection from '../components/UploadSection';
 import DataTable from '../components/DataTable';
 import Container from '@mui/material/Container';
@@ -17,6 +16,7 @@ import * as XLSX from 'xlsx';
 import { GridColDef } from '@mui/x-data-grid';
 import { validateClients, validateWorkers, validateTasks, ValidationError } from '../utils/validateData';
 import WorkflowStepper from '../components/WorkflowStepper';
+import Header from '../components/Header';
 import Link from 'next/link';
 import { useWorkflow } from '../components/WorkflowContext';
 
@@ -98,13 +98,28 @@ function exportToXLSX(data: any[], filename: string) {
 }
 
 function ClientsPage() {
-  const { clients, setClients } = useClients();
-  const { workers, setWorkers, tasks, setTasks } = useWorkflow();
+  const { clients, setClients, workers, setWorkers, tasks, setTasks } = useWorkflow();
   const [tab, setTab] = useState(0);
 
   const [clientErrors, setClientErrors] = useState<ValidationError[]>([]);
   const [workerErrors, setWorkerErrors] = useState<ValidationError[]>([]);
   const [taskErrors, setTaskErrors] = useState<ValidationError[]>([]);
+
+  // Wrapper functions with debugging
+  const handleSetClients = (newClients: any[]) => {
+    console.log('Setting clients:', newClients);
+    setClients(newClients);
+  };
+
+  const handleSetWorkers = (newWorkers: any[]) => {
+    console.log('Setting workers:', newWorkers);
+    setWorkers(newWorkers);
+  };
+
+  const handleSetTasks = (newTasks: any[]) => {
+    console.log('Setting tasks:', newTasks);
+    setTasks(newTasks);
+  };
 
   // Run validation on data change
   useEffect(() => {
@@ -123,6 +138,26 @@ function ClientsPage() {
     console.log('Task Errors:', taskErrors);
   }, [tasks, taskErrors]);
 
+  // Debug logs for clients and workers
+  useEffect(() => {
+    console.log('Clients:', clients);
+    console.log('Clients length:', clients.length);
+  }, [clients]);
+
+  useEffect(() => {
+    console.log('Workers:', workers);
+    console.log('Workers length:', workers.length);
+  }, [workers]);
+
+  // Comprehensive debug log
+  useEffect(() => {
+    console.log('=== DATA SUMMARY ===');
+    console.log('Clients:', clients.length, 'items');
+    console.log('Workers:', workers.length, 'items');
+    console.log('Tasks:', tasks.length, 'items');
+    console.log('===================');
+  }, [clients, workers, tasks]);
+
   return (
     <Container maxWidth="md" sx={{ py: 6 }}>
       <Typography variant="h4" component="h1" gutterBottom align="center" color="primary">
@@ -134,9 +169,9 @@ function ClientsPage() {
           <Tab label="Workers" />
           <Tab label="Tasks" />
         </Tabs>
-        {tab === 0 && <UploadSection setRows={setClients} label="Clients" />}
-        {tab === 1 && <UploadSection setRows={setWorkers} label="Workers" />}
-        {tab === 2 && <UploadSection setRows={setTasks} label="Tasks" />}
+        {tab === 0 && <UploadSection setRows={handleSetClients} label="Clients" />}
+        {tab === 1 && <UploadSection setRows={handleSetWorkers} label="Workers" />}
+        {tab === 2 && <UploadSection setRows={handleSetTasks} label="Tasks" />}
       </Paper>
       <Paper elevation={3} sx={{ p: 2, bgcolor: 'background.paper', border: '1px solid #222' }}>
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2, gap: 1 }}>
@@ -165,9 +200,9 @@ function ClientsPage() {
             Export XLSX
           </Button>
         </Box>
-        {tab === 0 && <DataTable rows={clients} setRows={setClients} columns={clientColumns} validationErrors={clientErrors} />}
-        {tab === 1 && <DataTable rows={workers} setRows={setWorkers} columns={workerColumns} validationErrors={workerErrors} />}
-        {tab === 2 && <DataTable rows={tasks} setRows={setTasks} columns={taskColumns} validationErrors={taskErrors} />}
+        {tab === 0 && <DataTable rows={clients} setRows={handleSetClients} columns={clientColumns} validationErrors={clientErrors} />}
+        {tab === 1 && <DataTable rows={workers} setRows={handleSetWorkers} columns={workerColumns} validationErrors={workerErrors} />}
+        {tab === 2 && <DataTable rows={tasks} setRows={handleSetTasks} columns={taskColumns} validationErrors={taskErrors} />}
       </Paper>
     </Container>
   );
@@ -177,10 +212,9 @@ export default function Home() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <Header />
       <WorkflowStepper currentStep={0} />
-      <ClientsProvider>
-        <ClientsPage />
-      </ClientsProvider>
+      <ClientsPage />
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 4, mb: 4, maxWidth: 900, mx: 'auto' }}>
         <Link href="/rules">
           <Button variant="contained" color="primary" size="large">Next</Button>

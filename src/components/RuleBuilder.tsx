@@ -218,6 +218,9 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({ taskIds }) => {
     console.log('Clients:', clients);
     console.log('Workers:', workers);
     console.log('Tasks:', tasks);
+    console.log('Clients length:', clients.length);
+    console.log('Workers length:', workers.length);
+    console.log('Tasks length:', tasks.length);
     
     // --- Co-run Suggestion: Find task pairs often requested together ---
     const taskPairs: Record<string, number> = {};
@@ -697,61 +700,74 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({ taskIds }) => {
       </Box>
 
       {/* Suggested Rules Section */}
-      {suggestedRules.length > 0 && (
-        <Paper elevation={3} sx={{ p: 4, mb: 4, borderRadius: 3, boxShadow: '0 2px 12px rgba(0,0,0,0.10)', bgcolor: '#f8f9fa', width: '100%' }}>
-          <Typography variant="h6" sx={{ fontWeight: 700, mb: 3, color: '#1976d2' }}>
-            AI Rule Suggestions
-          </Typography>
-          <Stack spacing={2}>
-            {suggestedRules.map((suggestion, idx) => (
-              <Box
-                key={idx}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  gap: 2,
-                  p: 2.5,
-                  border: '1px solid #e0e0e0',
-                  borderLeft: '5px solid #1976d2',
-                  borderRadius: 3,
-                  bgcolor: '#fff',
-                  boxShadow: '0 2px 8px rgba(25, 118, 210, 0.07)',
-                  mb: 1.5,
-                  minHeight: 64,
-                }}
-              >
-                <Box sx={{ mt: 0.5 }}>
-                  <AutoAwesomeIcon sx={{ color: '#1976d2', fontSize: 28 }} />
-                </Box>
-                <Box sx={{ flex: 1 }}>
-                  <Typography variant="body1" sx={{ mb: 1, fontWeight: 600, color: '#23293a', fontSize: 16 }}>
-                    {suggestion.description || JSON.stringify(suggestion, null, 2)}
-                  </Typography>
-                  <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end', mt: 1 }}>
-                    <Button
-                      variant="outlined"
-                      color="error"
-                      size="small"
-                      sx={{ borderRadius: 2, fontWeight: 500, minWidth: 80, fontSize: 13, py: 0.5, px: 1.5 }}
-                      onClick={() => handleIgnoreSuggestion(idx)}
-                    >
-                      Ignore
-                    </Button>
-                    <Button
-                      variant="contained"
-                      color="success"
-                      size="small"
-                      sx={{ borderRadius: 2, fontWeight: 600, minWidth: 80, fontSize: 13, py: 0.5, px: 1.5, boxShadow: 'none' }}
-                      onClick={() => handleAcceptSuggestion(idx)}
-                    >
-                      Accept
-                    </Button>
+      {suggestedRules.length > 0 ? (
+        <>
+          <Box sx={{ mb: 2 }}>
+            <Typography variant="subtitle1" sx={{ color: 'green', fontWeight: 600 }}>
+              AI found rule recommendations for your data!
+            </Typography>
+          </Box>
+          <Paper elevation={3} sx={{ p: 4, mb: 4, borderRadius: 3, boxShadow: '0 2px 12px rgba(0,0,0,0.10)', bgcolor: '#f8f9fa', width: '100%' }}>
+            <Typography variant="h6" sx={{ fontWeight: 700, mb: 3, color: '#1976d2' }}>
+              AI Rule Suggestions
+            </Typography>
+            <Stack spacing={2}>
+              {suggestedRules.map((suggestion, idx) => (
+                <Box
+                  key={idx}
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: 2,
+                    p: 2.5,
+                    border: '1px solid #e0e0e0',
+                    borderLeft: '5px solid #1976d2',
+                    borderRadius: 3,
+                    bgcolor: '#fff',
+                    boxShadow: '0 2px 8px rgba(25, 118, 210, 0.07)',
+                    mb: 1.5,
+                    minHeight: 64,
+                  }}
+                >
+                  <Box sx={{ mt: 0.5 }}>
+                    <AutoAwesomeIcon sx={{ color: '#1976d2', fontSize: 28 }} />
+                  </Box>
+                  <Box sx={{ flex: 1 }}>
+                    <Typography variant="body1" sx={{ mb: 1, fontWeight: 600, color: '#23293a', fontSize: 16 }}>
+                      {suggestion.description || JSON.stringify(suggestion, null, 2)}
+                    </Typography>
+                    <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end', mt: 1 }}>
+                      <Button
+                        variant="outlined"
+                        color="error"
+                        size="small"
+                        sx={{ borderRadius: 2, fontWeight: 500, minWidth: 80, fontSize: 13, py: 0.5, px: 1.5 }}
+                        onClick={() => handleIgnoreSuggestion(idx)}
+                      >
+                        Ignore
+                      </Button>
+                      <Button
+                        variant="contained"
+                        color="success"
+                        size="small"
+                        sx={{ borderRadius: 2, fontWeight: 600, minWidth: 80, fontSize: 13, py: 0.5, px: 1.5, boxShadow: 'none' }}
+                        onClick={() => handleAcceptSuggestion(idx)}
+                      >
+                        Accept
+                      </Button>
+                    </Box>
                   </Box>
                 </Box>
-              </Box>
-            ))}
-          </Stack>
-        </Paper>
+              ))}
+            </Stack>
+          </Paper>
+        </>
+      ) : (
+        <Box sx={{ mb: 2 }}>
+          <Typography variant="subtitle1" sx={{ color: 'orange', fontWeight: 600 }}>
+            No rule recommendations found for your current data.
+          </Typography>
+        </Box>
       )}
 
       {/* Rule Summary Table */}
