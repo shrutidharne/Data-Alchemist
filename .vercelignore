@@ -1,0 +1,30 @@
+# Ignore ESLint and TypeScript config files during build
+.eslintrc.json
+.eslintrc.js
+.eslintrc.yaml
+.eslintrc.yml
+tsconfig.json
+
+# Ignore test files
+*.test.js
+*.test.ts
+*.test.tsx
+*.spec.js
+*.spec.ts
+*.spec.tsx
+
+# Ignore development files
+.env.local
+.env.development
+.env.test
+
+# Ignore documentation
+README.md
+*.md
+
+# Ignore git files
+.git
+.gitignore
+
+# Ignore node modules (should be installed fresh)
+node_modules 
