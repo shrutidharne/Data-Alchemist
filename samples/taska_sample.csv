@@ -1,0 +1,5 @@
+TaskID,TaskName,Category,Duration,RequiredSkills,PreferredPhases,MaxConcurrent
+T1,Server Setup,IT,0,Networking,"[1,2]",3
+T1,Data Analysis,Analytics,2,Python,"[2,3]",0
+T3,Security Audit,IT,abc,Security,"[2,3]",1
+T4,UI Testing,QA,1,Selenium,"[2]",-1

@@ -1,0 +1,6 @@
+ClientID,ClientName,PriorityLevel,RequestedTaskIDs,GroupTag,AttributesJSON
+C001,Acme Corp,3,"T1,T3",GroupA,"{""location"": ""NY"", ""budget"": 5000}"
+C002,Beta Ltd,,T5,GroupB,"{""location"": ""SF""}"  # Missing PriorityLevel
+C003,Gamma Inc,High,"T1,T4",GroupA,"{location: 'LA', budget: 3000}"  # Wrong type + bad JSON
+C004,Delta Co,2,T99,GroupC,"{""location"": ""TX""}"  # T99 doesn't exist in tasks
+C001,Echo Pvt,1,T2,GroupD,"{""location"": ""LA""}"  # Duplicate ClientID

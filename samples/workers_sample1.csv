@@ -1,0 +1,3 @@
+WorkerID,WorkerName,Skills,AvailableSlots,MaxLoadPerPhase,WorkerGroup,QualificationLevel
+W1,Alice,Networking,"[1,2]",2,Group1,Senior
+W2,Bob,Python,"[1,2]",2,Group2,Mid

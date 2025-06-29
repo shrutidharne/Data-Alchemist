@@ -1,0 +1,8 @@
+TaskID,TaskName,Category,Duration,RequiredSkills,PreferredPhases,MaxConcurrent
+T1,Server Setup,IT,2,"Networking,Server","[1,2]",3
+T3,Data Analysis,Analytics,2,"Python,Excel","[2,3]",2
+T5,Security Audit,IT,1,Security,"[2,4]",1
+T7,UI Testing,QA,2,"Selenium,Manual","[2,3]",1
+T10,API Integration,Development,3,"JavaScript,API","[3]",2
+T11,Backup,IT,1,Backup,"[3]",2
+T99,Ghost Task,Unknown,2,Networking,"[5]",1
