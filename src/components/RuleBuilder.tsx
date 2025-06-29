@@ -702,13 +702,6 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({ taskIds }) => {
       </Box>
 
       {/* Suggested Rules Section */}
-      {hasRequestedSuggestions && suggestedRules.length === 0 && (
-        <Box sx={{ mb: 2 }}>
-          <Typography variant="subtitle1" sx={{ color: 'orange', fontWeight: 600 }}>
-            No rule recommendations found for your current data.
-          </Typography>
-        </Box>
-      )}
       {suggestedRules.length > 0 && (
         <>
           <Box sx={{ mb: 2 }}>
