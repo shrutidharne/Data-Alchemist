@@ -100,6 +100,7 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({ taskIds }) => {
   const [aiLoading, setAiLoading] = useState(false);
   // UI state for advanced fields
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [hasRequestedSuggestions, setHasRequestedSuggestions] = useState(false);
 
   // Add Co-run rule
   const handleAddCoRunRule = () => {
@@ -214,6 +215,7 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({ taskIds }) => {
 
   // AI: Rule recommendations (data-driven)
   const handleGetSuggestions = () => {
+    setHasRequestedSuggestions(true);
     console.log('=== DEBUG: Starting suggestions generation ===');
     console.log('Clients:', clients);
     console.log('Workers:', workers);
@@ -700,7 +702,14 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({ taskIds }) => {
       </Box>
 
       {/* Suggested Rules Section */}
-      {suggestedRules.length > 0 ? (
+      {hasRequestedSuggestions && suggestedRules.length === 0 && (
+        <Box sx={{ mb: 2 }}>
+          <Typography variant="subtitle1" sx={{ color: 'orange', fontWeight: 600 }}>
+            No rule recommendations found for your current data.
+          </Typography>
+        </Box>
+      )}
+      {suggestedRules.length > 0 && (
         <>
           <Box sx={{ mb: 2 }}>
             <Typography variant="subtitle1" sx={{ color: 'green', fontWeight: 600 }}>
@@ -762,12 +771,6 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({ taskIds }) => {
             </Stack>
           </Paper>
         </>
-      ) : (
-        <Box sx={{ mb: 2 }}>
-          <Typography variant="subtitle1" sx={{ color: 'orange', fontWeight: 600 }}>
-            No rule recommendations found for your current data.
-          </Typography>
-        </Box>
       )}
 
       {/* Rule Summary Table */}
