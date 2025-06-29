@@ -18,6 +18,7 @@ import { GridColDef } from '@mui/x-data-grid';
 import { validateClients, validateWorkers, validateTasks, ValidationError } from '../utils/validateData';
 import WorkflowStepper from '../components/WorkflowStepper';
 import Link from 'next/link';
+import { useWorkflow } from '../components/WorkflowContext';
 
 const theme = createTheme({
   palette: {
@@ -98,9 +99,8 @@ function exportToXLSX(data: any[], filename: string) {
 
 function ClientsPage() {
   const { clients, setClients } = useClients();
+  const { workers, setWorkers, tasks, setTasks } = useWorkflow();
   const [tab, setTab] = useState(0);
-  const [workers, setWorkers] = useState<any[]>([]);
-  const [tasks, setTasks] = useState<any[]>([]);
 
   const [clientErrors, setClientErrors] = useState<ValidationError[]>([]);
   const [workerErrors, setWorkerErrors] = useState<ValidationError[]>([]);

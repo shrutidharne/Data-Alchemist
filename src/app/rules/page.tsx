@@ -1,17 +1,21 @@
+'use client';
 import React from 'react';
 import RuleBuilder from '../../components/RuleBuilder';
 import WorkflowStepper from '../../components/WorkflowStepper';
 import Link from 'next/link';
 import { Button } from '@mui/material';
-
-// Example: Replace with your real task IDs from context or state if available
-const taskIds = ["T1", "T2", "T3"];
+import { useWorkflow } from '../../components/WorkflowContext';
 
 export default function RulesPage() {
+  const { tasks } = useWorkflow();
+  
+  // Extract task IDs from the tasks array
+  const taskIds = tasks.map(task => task.TaskID || task.taskID || task.id || task.Id).filter(Boolean);
+
   return (
     <div style={{ padding: 32 }}>
       <WorkflowStepper currentStep={1} />
-      {/* <h1>Rule Builder</h1> */}
+      <h1>Rule Builder</h1>
       <RuleBuilder taskIds={taskIds} />
       <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 32 }}>
         <Link href="/">
